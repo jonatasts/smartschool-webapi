@@ -4,7 +4,7 @@ namespace smartschool_webapi.Models
     {
         public Student() {}
 
-        public Student(int id, string name, string lastName, int number)
+        public Student(int id, string name, string lastName, string number)
         {
             this.Id = id;
             this.Name = name;
@@ -15,6 +15,6 @@ namespace smartschool_webapi.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
     }
 }

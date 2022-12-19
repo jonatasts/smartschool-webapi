@@ -4,15 +4,14 @@ namespace smartschool_webapi.Models
     {
         public Teacher() {}
 
-        public Teacher(int id, string name, string discipline)
+        public Teacher(int id, string name)
         {
             this.Id = id;
             this.Name = name;
-            this.Discipline = discipline;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Discipline { get; set; }
+        public IEnumerable<Discipline> Disciplines { get; set; }
     }
 }
