@@ -17,7 +17,7 @@ namespace smartschool_webapi.Models
         }
 
         public int Id { get; set; }
-        public string ?Name { get; set; }
-        public string ?Discipline { get; set; }
+        public string Name { get; set; }
+        public string Discipline { get; set; }
     }
 }
