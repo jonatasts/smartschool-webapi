@@ -72,5 +72,16 @@ namespace smartschool_webapi.Data
                     new StudentDiscipline() {StudentId = 7, DisciplineId = 5 }
                 });
         }
+    
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var connectionString = configuration.GetConnectionString("SqliteSmartSchool");
+            optionsBuilder.UseSqlite(connectionString);
+        }
     }
 }
