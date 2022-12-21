@@ -38,13 +38,13 @@ namespace smartschool_webapi.Data
 
             if (includeDiscipline)
             {
-                query = query.Include(pe => pe.StudentsDisciplines)
-                             .ThenInclude(ad => ad.Discipline)
-                             .ThenInclude(d => d.Teacher);
+                query = query.Include(student => student.StudentsDisciplines)
+                             .ThenInclude(studentsDisciplines => studentsDisciplines.Discipline)
+                             .ThenInclude(discipline => discipline.Teacher);
             }
 
             query = query.AsNoTracking()
-                         .OrderBy(c => c.Id);
+                         .OrderBy(student => student.Id);
 
             return await query.ToArrayAsync();
         }
@@ -54,14 +54,14 @@ namespace smartschool_webapi.Data
 
             if (includeDiscipline)
             {
-                query = query.Include(a => a.StudentsDisciplines)
-                             .ThenInclude(ad => ad.Discipline)
-                             .ThenInclude(d => d.Teacher);
+                query = query.Include(student => student.StudentsDisciplines)
+                             .ThenInclude(studentsDisciplines => studentsDisciplines.Discipline)
+                             .ThenInclude(discipline => discipline.Teacher);
             }
 
             query = query.AsNoTracking()
-                         .OrderBy(aluno => aluno.Id)
-                         .Where(aluno => aluno.Id == studentId);
+                         .OrderBy(student => student.Id)
+                         .Where(student => student.Id == studentId);
 
             return await query.FirstOrDefaultAsync();
         }
@@ -71,14 +71,14 @@ namespace smartschool_webapi.Data
 
             if (includeDiscipline)
             {
-                query = query.Include(p => p.StudentsDisciplines)
-                             .ThenInclude(ad => ad.Discipline)                             
-                             .ThenInclude(d => d.Teacher);
+                query = query.Include(student => student.StudentsDisciplines)
+                             .ThenInclude(studentsDisciplines => studentsDisciplines.Discipline)                             
+                             .ThenInclude(discipline => discipline.Teacher);
             }
 
             query = query.AsNoTracking()
-                         .OrderBy(aluno => aluno.Id)
-                         .Where(aluno => aluno.StudentsDisciplines.Any(ad => ad.StudentId == disciplineId));
+                         .OrderBy(student => student.Id)
+                         .Where(student => student.StudentsDisciplines.Any(studentsDisciplines => studentsDisciplines.StudentId == disciplineId));
 
             return await query.ToArrayAsync();
         }
@@ -89,13 +89,13 @@ namespace smartschool_webapi.Data
 
             if (includeDiscipline)
             {
-                query = query.Include(p => p.Disciplines);
+                query = query.Include(teacher => teacher.Disciplines);
             }
 
             query = query.AsNoTracking()
-                         .OrderBy(aluno => aluno.Id)
-                         .Where(aluno => aluno.Disciplines.Any(d => 
-                            d.StudentsDisciplines.Any(ad => ad.StudentId == studentId)));
+                         .OrderBy(student => student.Id)
+                         .Where(student => student.Disciplines.Any(discipline => 
+                            discipline.StudentsDisciplines.Any(discipline => discipline.StudentId == studentId)));
 
             return await query.ToArrayAsync();
         }
@@ -106,11 +106,11 @@ namespace smartschool_webapi.Data
 
             if (includeDisciplines)
             {
-                query = query.Include(c => c.Disciplines);
+                query = query.Include(teacher => teacher.Disciplines);
             }
 
             query = query.AsNoTracking()
-                         .OrderBy(professor => professor.Id);
+                         .OrderBy(teacher => teacher.Id);
 
             return await query.ToArrayAsync();
         }
@@ -120,12 +120,12 @@ namespace smartschool_webapi.Data
 
             if (includeDisciplines)
             {
-                query = query.Include(pe => pe.Disciplines);
+                query = query.Include(teacher => teacher.Disciplines);
             }
 
             query = query.AsNoTracking()
-                         .OrderBy(professor => professor.Id)
-                         .Where(professor => professor.Id == teacherId);
+                         .OrderBy(teacher => teacher.Id)
+                         .Where(teacher => teacher.Id == teacherId);
 
             return await query.FirstOrDefaultAsync();
         }
