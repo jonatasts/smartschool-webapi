@@ -16,5 +16,6 @@ namespace smartschool_webapi.Models
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Number { get; set; }
+        public IEnumerable<StudentDiscipline> StudentsDisciplines { get; set; }
     }
 }

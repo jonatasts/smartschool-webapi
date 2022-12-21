@@ -13,6 +13,6 @@ namespace smartschool_webapi.Models
         public int StudentId { get; set; }
         public Student Student { get; set; }
         public int DisciplineId { get; set; }
-        public Teacher Teacher { get; set; }
+        public Discipline Discipline { get; set; }
     }
 }
