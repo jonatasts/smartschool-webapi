@@ -9,6 +9,7 @@ var connectionString = builder.Configuration.GetConnectionString("SqliteSmartSch
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddDbContext<SmartSchoolContext>(x => x.UseSqlite(connectionString));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
