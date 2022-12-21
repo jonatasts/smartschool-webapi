@@ -7,18 +7,35 @@ namespace smartschool_webapi.Controllers
     [Route("api/[controller]")]
     public class StudentController : ControllerBase
     {
-        public IRepository Repository { get; }
+        public readonly IRepository Repository;
         public StudentController(IRepository repository)
         {
-            this.Repository = repository;            
+            Repository = repository;
         }
 
         [HttpGet]
-        public IActionResult get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                return Ok("Jonatas");
+                var result = await Repository.GetAllStudentsAsync(true);
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Erro: {e.Message}");
+            }
+        }
+
+        [HttpGet("{studentId}")]
+        public async Task<IActionResult> GetStudentById(int studentId)
+        {
+            try
+            {
+                var result = await Repository.GetStudentAsyncById(studentId, true);
+
+                return Ok(result);
             }
             catch (Exception e)
             {
