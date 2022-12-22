@@ -15,18 +15,22 @@ namespace smartschool_webapi.Data
         {
             _context = context;
         }
+
         public void Add<T>(T entity) where T : class
         {
             _context.Add(entity);
         }
+
         public void Update<T>(T entity) where T : class
         {
             _context.Update(entity);
         }
+
         public void Delete<T>(T entity) where T : class
         {
             _context.Remove(entity);
         }
+
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync()) > 0;
@@ -48,6 +52,7 @@ namespace smartschool_webapi.Data
 
             return await query.ToArrayAsync();
         }
+
         public async Task<Student> GetStudentAsyncById(int studentId, bool includeDiscipline)
         {
             IQueryable<Student> query = _context.Students;
@@ -65,6 +70,7 @@ namespace smartschool_webapi.Data
 
             return await query.FirstOrDefaultAsync();
         }
+
         public async Task<Student[]> GetStudentsAsyncByDisciplineId(int disciplineId, bool includeDiscipline)
         {
             IQueryable<Student> query = _context.Students;
@@ -114,6 +120,7 @@ namespace smartschool_webapi.Data
 
             return await query.ToArrayAsync();
         }
+
         public async Task<Teacher> GetTeacherAsyncById(int teacherId, bool includeDisciplines = true)
         {
             IQueryable<Teacher> query = _context.Teachers;
