@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using smartschool_webapi.Data;
+using smartschool_webapi.Models;
 
 namespace smartschool_webapi.Controllers
 {
@@ -35,12 +36,93 @@ namespace smartschool_webapi.Controllers
             {
                 var result = await Repository.GetStudentAsyncById(studentId, true);
 
-                return Ok(result);
+                return Ok(result != null ? result : "Aluno não encontrado!");
             }
             catch (Exception e)
             {
                 return BadRequest($"Erro: {e.Message}");
             }
+        }
+
+        [HttpGet("ByDiscipline/{disciplineId}")]
+        public async Task<IActionResult> getByDisciplineId(int disciplineId)
+        {
+            try
+            {
+                var result = await Repository.GetStudentsAsyncByDisciplineId(disciplineId, true);
+
+                return Ok(result != null ? result : "Aluno não encontrado!");
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Erro: {e.Message}");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> post(Student student)
+        {
+            try
+            {
+                Repository.Add(student);
+
+                if (await Repository.SaveChangesAsync())
+                {
+                    return Ok(student);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro: {ex.Message}");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut("{studentId}")]
+        public async Task<IActionResult> put(int studentId, Student student)
+        {
+            try
+            {
+                var studentFounded = await Repository.GetStudentAsyncById(studentId, false);
+                if(studentFounded == null) return NotFound("Aluno não encontrado!");
+
+                Repository.Update(student);
+
+                if(await Repository.SaveChangesAsync())
+                {
+                    return Ok(student);
+                }                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro: {ex.Message}");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete("{studentId}")]
+        public async Task<IActionResult> delete(int studentId)
+        {
+            try
+            {
+                var studentFounded = await Repository.GetStudentAsyncById(studentId, false);
+                if(studentFounded == null) return NotFound("Aluno não encontrado!");
+
+                Repository.Delete(studentFounded);
+
+                if(await Repository.SaveChangesAsync())
+                {
+                    return Ok("Aluno deletado!");
+                }                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro: {ex.Message}");
+            }
+
+            return BadRequest();
         }
     }
 }
