@@ -72,7 +72,7 @@ namespace smartschool_webapi.Data
             if (includeDiscipline)
             {
                 query = query.Include(student => student.StudentsDisciplines)
-                             .ThenInclude(studentsDisciplines => studentsDisciplines.Discipline)                             
+                             .ThenInclude(studentsDisciplines => studentsDisciplines.Discipline)
                              .ThenInclude(discipline => discipline.Teacher);
             }
 
@@ -83,18 +83,18 @@ namespace smartschool_webapi.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<Teacher[]> GetTeachersAsyncByStudentId(int studentId, bool includeDiscipline)
+        public async Task<Teacher[]> GetTeachersAsyncByStudentId(int studentId, bool includeDisciplines = true)
         {
             IQueryable<Teacher> query = _context.Teachers;
 
-            if (includeDiscipline)
+            if (includeDisciplines)
             {
                 query = query.Include(teacher => teacher.Disciplines);
             }
 
             query = query.AsNoTracking()
-                         .OrderBy(student => student.Id)
-                         .Where(student => student.Disciplines.Any(discipline => 
+                         .OrderBy(teacher => teacher.Id)
+                         .Where(teacher => teacher.Disciplines.Any(discipline =>
                             discipline.StudentsDisciplines.Any(discipline => discipline.StudentId == studentId)));
 
             return await query.ToArrayAsync();
