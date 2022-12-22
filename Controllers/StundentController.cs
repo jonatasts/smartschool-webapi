@@ -44,7 +44,7 @@ namespace smartschool_webapi.Controllers
             }
         }
 
-        [HttpGet("ByDiscipline/{disciplineId}")]
+        [HttpGet("ByDisciplineId/{disciplineId}")]
         public async Task<IActionResult> getByDisciplineId(int disciplineId)
         {
             try
