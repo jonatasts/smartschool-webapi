@@ -20,7 +20,7 @@ namespace smartschoolwebapi.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     LastName = table.Column<string>(type: "TEXT", nullable: true),
-                    Number = table.Column<string>(type: "TEXT", nullable: true)
+                    Phone = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,28 +65,28 @@ namespace smartschoolwebapi.Migrations
                 columns: table => new
                 {
                     StudentId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DisciplineId = table.Column<int>(type: "INTEGER", nullable: false),
-                    TeacherId = table.Column<int>(type: "INTEGER", nullable: true)
+                    DisciplineId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StudentsDisciplines", x => new { x.StudentId, x.DisciplineId });
+                    table.ForeignKey(
+                        name: "FK_StudentsDisciplines_Disciplines_DisciplineId",
+                        column: x => x.DisciplineId,
+                        principalTable: "Disciplines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_StudentsDisciplines_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StudentsDisciplines_Teachers_TeacherId",
-                        column: x => x.TeacherId,
-                        principalTable: "Teachers",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
                 table: "Students",
-                columns: new[] { "Id", "LastName", "Name", "Number" },
+                columns: new[] { "Id", "LastName", "Name", "Phone" },
                 values: new object[,]
                 {
                     { 1, "Kent", "Marta", "33225555" },
@@ -124,32 +124,32 @@ namespace smartschoolwebapi.Migrations
 
             migrationBuilder.InsertData(
                 table: "StudentsDisciplines",
-                columns: new[] { "DisciplineId", "StudentId", "TeacherId" },
+                columns: new[] { "DisciplineId", "StudentId" },
                 values: new object[,]
                 {
-                    { 2, 1, null },
-                    { 4, 1, null },
-                    { 5, 1, null },
-                    { 1, 2, null },
-                    { 2, 2, null },
-                    { 5, 2, null },
-                    { 1, 3, null },
-                    { 2, 3, null },
-                    { 3, 3, null },
-                    { 1, 4, null },
-                    { 4, 4, null },
-                    { 5, 4, null },
-                    { 4, 5, null },
-                    { 5, 5, null },
-                    { 1, 6, null },
-                    { 2, 6, null },
-                    { 3, 6, null },
-                    { 4, 6, null },
-                    { 1, 7, null },
-                    { 2, 7, null },
-                    { 3, 7, null },
-                    { 4, 7, null },
-                    { 5, 7, null }
+                    { 2, 1 },
+                    { 4, 1 },
+                    { 5, 1 },
+                    { 1, 2 },
+                    { 2, 2 },
+                    { 5, 2 },
+                    { 1, 3 },
+                    { 2, 3 },
+                    { 3, 3 },
+                    { 1, 4 },
+                    { 4, 4 },
+                    { 5, 4 },
+                    { 4, 5 },
+                    { 5, 5 },
+                    { 1, 6 },
+                    { 2, 6 },
+                    { 3, 6 },
+                    { 4, 6 },
+                    { 1, 7 },
+                    { 2, 7 },
+                    { 3, 7 },
+                    { 4, 7 },
+                    { 5, 7 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -158,19 +158,19 @@ namespace smartschoolwebapi.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentsDisciplines_TeacherId",
+                name: "IX_StudentsDisciplines_DisciplineId",
                 table: "StudentsDisciplines",
-                column: "TeacherId");
+                column: "DisciplineId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Disciplines");
+                name: "StudentsDisciplines");
 
             migrationBuilder.DropTable(
-                name: "StudentsDisciplines");
+                name: "Disciplines");
 
             migrationBuilder.DropTable(
                 name: "Students");
