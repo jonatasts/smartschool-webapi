@@ -36,7 +36,7 @@ namespace smartschool_webapi.Controllers
             {
                 var result = await Repository.GetTeacherAsyncById(teacherId, true);
 
-                return Ok(result != null ? result : "Professor não encontrado!");
+                return Ok(result != null ? result : new { message = "Professor não encontrado!" });
             }
             catch (Exception e)
             {
@@ -51,7 +51,7 @@ namespace smartschool_webapi.Controllers
             {
                 var result = await Repository.GetTeachersAsyncByStudentId(studentId, true);
 
-                return Ok(result != null ? result : "Professor não encontrado!");
+                return Ok(result != null ? result : new { message = "Professor não encontrado!" });
             }
             catch (Exception e)
             {
@@ -85,14 +85,14 @@ namespace smartschool_webapi.Controllers
             try
             {
                 var teacherFounded = await Repository.GetTeacherAsyncById(teacherId, false);
-                if(teacherFounded == null) return NotFound("Professor não encontrado!");
+                if (teacherFounded == null) return NotFound("Professor não encontrado!");
 
                 Repository.Update(teacher);
 
-                if(await Repository.SaveChangesAsync())
+                if (await Repository.SaveChangesAsync())
                 {
                     return Ok(teacher);
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -108,14 +108,14 @@ namespace smartschool_webapi.Controllers
             try
             {
                 var teacherFounded = await Repository.GetTeacherAsyncById(teacherId, false);
-                if(teacherFounded == null) return NotFound("Professor não encontrado!");
+                if (teacherFounded == null) return NotFound("Professor não encontrado!");
 
                 Repository.Delete(teacherFounded);
 
-                if(await Repository.SaveChangesAsync())
+                if (await Repository.SaveChangesAsync())
                 {
-                    return Ok("Teacher deletado!");
-                }                
+                    return Ok(new { message = "Teacher deletado!" });
+                }
             }
             catch (Exception ex)
             {

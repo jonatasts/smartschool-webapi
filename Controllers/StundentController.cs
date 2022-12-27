@@ -36,7 +36,7 @@ namespace smartschool_webapi.Controllers
             {
                 var result = await Repository.GetStudentAsyncById(studentId, true);
 
-                return Ok(result != null ? result : "Aluno não encontrado!");
+                return Ok(result != null ? result : new { message = "Aluno não encontrado!" });
             }
             catch (Exception e)
             {
@@ -51,7 +51,7 @@ namespace smartschool_webapi.Controllers
             {
                 var result = await Repository.GetStudentsAsyncByDisciplineId(disciplineId, true);
 
-                return Ok(result != null ? result : "Aluno não encontrado!");
+                return Ok(result != null ? result : new { message = "Aluno não encontrado!" });
             }
             catch (Exception e)
             {
@@ -85,14 +85,14 @@ namespace smartschool_webapi.Controllers
             try
             {
                 var studentFounded = await Repository.GetStudentAsyncById(studentId, false);
-                if(studentFounded == null) return NotFound("Aluno não encontrado!");
+                if (studentFounded == null) return NotFound(new { message = "Aluno não encontrado!" });
 
                 Repository.Update(student);
 
-                if(await Repository.SaveChangesAsync())
+                if (await Repository.SaveChangesAsync())
                 {
                     return Ok(student);
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -108,14 +108,14 @@ namespace smartschool_webapi.Controllers
             try
             {
                 var studentFounded = await Repository.GetStudentAsyncById(studentId, false);
-                if(studentFounded == null) return NotFound("Aluno não encontrado!");
+                if (studentFounded == null) return NotFound("Aluno não encontrado!");
 
                 Repository.Delete(studentFounded);
 
-                if(await Repository.SaveChangesAsync())
+                if (await Repository.SaveChangesAsync())
                 {
-                    return Ok("Aluno deletado!");
-                }                
+                    return Ok(new { message = "Aluno deletado!" });
+                }
             }
             catch (Exception ex)
             {
