@@ -136,5 +136,19 @@ namespace smartschool_webapi.Data
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public async Task<Teacher> GetTeacherAsyncByDisciplineName(string disciplineName)
+        {
+            IQueryable<Teacher> query = _context.Teachers;
+
+            query = query.Include(teacher => teacher.Disciplines);
+
+            query = query.AsNoTracking()
+                         .OrderBy(teacher => teacher.Id)
+                         .Where(teacher => teacher.Disciplines.Any(discipline =>
+                            discipline.Name == disciplineName));
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }

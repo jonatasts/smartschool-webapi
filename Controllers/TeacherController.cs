@@ -59,6 +59,21 @@ namespace smartschool_webapi.Controllers
             }
         }
 
+        [HttpGet("ByDisciplineName/{disciplineName}")]
+        public async Task<IActionResult> GetTeacherByDisciplineName(string disciplineName)
+        {
+            try
+            {
+                var result = await Repository.GetTeacherAsyncByDisciplineName(disciplineName);
+
+                return Ok(result != null ? result : new { message = "Professor não encontrado!" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Erro: {e.Message}");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> post(Teacher teacher)
         {
@@ -124,5 +139,6 @@ namespace smartschool_webapi.Controllers
 
             return BadRequest();
         }
+
     }
 }

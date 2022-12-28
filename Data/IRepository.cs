@@ -23,5 +23,6 @@ namespace smartschool_webapi.Data
         Task<Teacher[]> GetAllTeachersAsync(bool includeStudent);
         Task<Teacher> GetTeacherAsyncById(int teacherId, bool includeStudent);
         Task<Teacher[]> GetTeachersAsyncByStudentId(int studentId, bool includeDiscipline);
+        Task<Teacher> GetTeacherAsyncByDisciplineName(string disciplineName);
     }
 }
