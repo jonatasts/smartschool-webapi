@@ -4,9 +4,9 @@ API desenvolvida em ASP.Net 6 & Entity Framework para o projeto Smart School des
 
 ## Endpoints
 
-<img src="assets/student-endpoints.png">
+<img src="src/assets/student-endpoints.png">
 
-<img src="assets/teacher-endpoints.png">
+<img src="src/assets/teacher-endpoints.png">
 
 ## Development server
 
