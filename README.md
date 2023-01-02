@@ -1,6 +1,6 @@
 # Smart School Web Api
 
-API desenvolvida em ASP.Net 6 & Entity Framework para o projeto Smart School desenvolvido em Angular.
+API desenvolvida em .NET 6 & Entity Framework para o projeto Smart School desenvolvido em Angular.
 
 ## Endpoints
 
